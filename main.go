@@ -17,7 +17,7 @@ func main() {
 	baseURL := os.Args[1]
 	fmt.Printf("starting crawl of: %s\n", baseURL)
 
-	url := "https://wagslane.dev"
+	url := "https://wikipedia.org"
 	html, err := getHTML(url)
 	if err != nil {
 		fmt.Println("Error:", err)
