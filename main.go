@@ -3,5 +3,11 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println("Hello, World!")
+	normalizedURL, err := normalizeURL("https://blog.boot.dev/path%20with%20spaces")
+
+	if err != nil {
+		fmt.Println("Error:", err)
+	} else {
+		fmt.Println("Normalized URL:", normalizedURL)
+	}
 }

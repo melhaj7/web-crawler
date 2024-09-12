@@ -1,4 +1,4 @@
-package utils
+package main
 
 import (
 	"net/url"
@@ -18,7 +18,7 @@ func normalizeURL(rawURl string) (string, error) {
 	}
 
 	if parsedURL.Fragment != "" {
-		normalized += "?" + parsedURL.Fragment
+		normalized += "#" + parsedURL.Fragment
 	}
 
 	return strings.ToLower(normalized), nil

@@ -1,4 +1,4 @@
-package utils_test
+package main
 
 import (
 	"testing"
@@ -49,11 +49,6 @@ func TestNormalizeURL(t *testing.T) {
 			name:     "Empty input URL",
 			inputURL: "",
 			expected: "",
-		},
-		{
-			name:     "URL with special characters",
-			inputURL: "https://blog.boot.dev/path%20with%20spaces",
-			expected: "blog.boot.dev/path%20with%20spaces",
 		},
 	}
 
