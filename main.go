@@ -7,8 +7,9 @@ import (
 )
 
 func main() {
-	if len(os.Args) < 2 {
-		fmt.Println("no website provided")
+	if len(os.Args) < 4 {
+		fmt.Println("not enough arguments provided")
+		fmt.Println("usage: crawler <baseURL> <maxConcurrency> <maxPages>")
 		return
 	}
 	if len(os.Args) > 4 {
@@ -16,17 +17,18 @@ func main() {
 		return
 	}
 	rawBaseURL := os.Args[1]
+	maxConcurrencyString := os.Args[2]
+	maxPagesString := os.Args[3]
 
-	maxConcurrency, err := strconv.Atoi(os.Args[2])
+	maxConcurrency, err := strconv.Atoi(maxConcurrencyString)
 	if err != nil {
-		fmt.Println("Invalid maxConcurrency:", err)
-		os.Exit(1)
+		fmt.Printf("Error - maxConcurrency: %v", err)
+		return
 	}
-
-	maxPages, err := strconv.Atoi(os.Args[3])
+	maxPages, err := strconv.Atoi(maxPagesString)
 	if err != nil {
-		fmt.Println("Invalid maxPages:", err)
-		os.Exit(1)
+		fmt.Printf("Error - maxPages: %v", err)
+		return
 	}
 
 	cfg, err := configure(rawBaseURL, maxConcurrency, maxPages)
@@ -41,7 +43,5 @@ func main() {
 	go cfg.crawlPage(rawBaseURL)
 	cfg.wg.Wait()
 
-	for normalizedURL, count := range cfg.pages {
-		fmt.Printf("%d - %s\n", count, normalizedURL)
-	}
+	printReport(cfg.pages, rawBaseURL)
 }
